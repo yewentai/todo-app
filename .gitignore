@@ -1,0 +1,32 @@
+# === General ===
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# === Python ===
+baackend/__pycache__/
+frontend/__pycache__/
+*.pyo
+*.pyd
+*.pyc
+*.sqlite3
+
+# === Node.js / Frontend ===
+node_modules/
+dist/
+build/
+.vite/
+
+# === VSCode / IDEs ===
+.vscode/
+.idea/
+
+# === OS / Tooling ===
+*.bak
+*.orig
+
+# === Project-specific ===
+export_code.py
+project_code_export.txt
