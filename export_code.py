@@ -1,6 +1,7 @@
 import os
 
 # Configuration
+input_folder = "frontend"  # Set the folder you want to export
 output_file = "project_code_export.txt"
 include_ext = {".py", ".js", ".jsx", ".html", ".css", ".env", ".yaml"}
 exclude_dirs = {"node_modules", "__pycache__", ".git"}
@@ -22,8 +23,8 @@ def build_tree(start_path, prefix=""):
 
 
 # Build tree structure
-tree = ["Project file structure:"]
-tree.extend(build_tree("."))
+tree = [f"Project file structure for '{input_folder}':"]
+tree.extend(build_tree(input_folder))
 
 # Write tree to output file
 with open(output_file, "w", encoding="utf-8") as out:
@@ -31,7 +32,7 @@ with open(output_file, "w", encoding="utf-8") as out:
     out.write("\n\n")
 
 # Walk the directory tree and export code
-for root, dirs, files in os.walk("."):
+for root, dirs, files in os.walk(input_folder):
     dirs[:] = [d for d in dirs if d not in exclude_dirs]
     for file in files:
         if file in exclude_files:
@@ -46,4 +47,4 @@ for root, dirs, files in os.walk("."):
                 out.write(content)
                 out.write("\n\n")
 
-print(f"Exported code to {output_file}")
+print(f"Exported code from '{input_folder}' to {output_file}")
