@@ -21,7 +21,7 @@ A minimal full-stack To-Do List application built with:
 
 ## 📦 Project Structure
 
-```
+``` sh
 .
 ├── backend
 │   ├── main.py           # FastAPI app
@@ -59,8 +59,6 @@ A minimal full-stack To-Do List application built with:
 
 ```bash
 cd backend
-python3 -m venv .venv          # optional
-source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
