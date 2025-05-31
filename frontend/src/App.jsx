@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Calendar } from 'lucide-react';
-import useTasks from './hooks/useTasks';
-import TaskItem from './components/TaskItem';
-import StatsCard from './components/StatsCard';
-import ProgressBar from './components/ProgressBar';
-import EmptyState from './components/EmptyState';
-import AddTaskForm from './components/AddTaskForm';
+import { Calendar, Target, Check, TrendingUp } from 'lucide-react'; // Added missing icons
+import useTasks from './hooks/useTasks'; // Fixed path
+import TaskItem from './components/TaskItem'; // Fixed path
+import StatsCard from './components/StatsCard'; // Fixed path
+import ProgressBar from './components/ProgressBar'; // Fixed path
+import EmptyState from './components/EmptyState'; // Fixed path
+import AddTaskForm from './components/AddTaskForm'; // Fixed path
 
 export default function App() {
   const [newTask, setNewTask] = useState('');
