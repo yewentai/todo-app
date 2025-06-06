@@ -25,7 +25,7 @@ A robust REST API backend for the Task Master todo application built with FastAP
 
 ## 📦 Project Structure
 
-```
+``` sh
 backend/
 ├── main.py              # Main application file
 ├── requirements.txt     # Python dependencies
@@ -85,7 +85,7 @@ pytest --cov=main
 
 ### Base URL
 
-```
+``` http
 http://localhost:8000
 ```
 
