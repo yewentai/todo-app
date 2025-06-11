@@ -1,11 +1,11 @@
 import os
 
 # Configuration
-input_folder = "frontend"  # Set the folder you want to export
+input_folder = "./"  # Set the folder you want to export
 output_file = "project_code_export.txt"
-include_ext = {".py", ".js", ".jsx", ".html", ".css", ".env", ".yaml"}
-exclude_dirs = {"node_modules", "__pycache__", ".git"}
-exclude_files = {"export_code.py"}
+include_ext = {".py", ".js", ".ts", "jsx", ".tsx", "html", ".css", ".env", ".yaml", ".json"}
+exclude_dirs = {"node_modules", "__pycache__", ".git", "build"}
+exclude_files = {"export_code.py", "package-lock.json"}
 
 
 def build_tree(start_path, prefix=""):
