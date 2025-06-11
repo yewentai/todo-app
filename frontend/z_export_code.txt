@@ -1,0 +1,317 @@
+Project file structure for './':
+├── .env
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package.json
+├── public
+│   └── vite.svg
+├── src
+│   ├── APP.test.jsx
+│   ├── App.jsx
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   ├── AddTaskForm.jsx
+│   │   ├── EmptyState.jsx
+│   │   ├── ProgressBar.jsx
+│   │   ├── StatsCard.jsx
+│   │   └── TaskItem.jsx
+│   ├── hooks
+│   │   └── useTasks.js
+│   ├── index.css
+│   ├── main.jsx
+│   ├── services
+│   │   └── taskService.js
+│   └── setupTests.js
+├── vite.config.js
+├── z_export_code.py
+└── z_export_code.txt
+
+===== ./package.json =====
+{
+  "name": "todo-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.8",
+    "axios": "^1.9.0",
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.4"
+  },
+  "main": "eslint.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
+
+
+===== ./eslint.config.js =====
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+
+export default [
+  { ignores: ['dist'] },
+  {
+    files: ['**/*.{js,jsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  },
+]
+
+
+===== ./vite.config.js =====
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/setupTests.js',
+  },
+  server: {
+    host: true
+  },
+})
+
+
+===== ./z_export_code.py =====
+import os
+
+# Configuration
+input_folder = "./"  # Set the folder you want to export
+output_file = "z_export_code.txt"
+include_ext = {".py", ".js", ".ts", "jsx", ".tsx", "html", ".css", ".env", ".yaml", ".json"}
+exclude_dirs = {"node_modules", "__pycache__", ".git", "build", "dist", "venv", ".vscode", ".idea", ".cache"}
+exclude_files = {"export_code.py", "package-lock.json"}
+
+
+def build_tree(start_path, prefix=""):
+    tree_lines = []
+    entries = [e for e in os.listdir(start_path) if e not in exclude_dirs and e not in exclude_files]
+    entries.sort()
+    for idx, entry in enumerate(entries):
+        path = os.path.join(start_path, entry)
+        connector = "└── " if idx == len(entries) - 1 else "├── "
+        tree_lines.append(f"{prefix}{connector}{entry}")
+        if os.path.isdir(path):
+            extension = "    " if idx == len(entries) - 1 else "│   "
+            tree_lines.extend(build_tree(path, prefix + extension))
+    return tree_lines
+
+
+# Build tree structure
+tree = [f"Project file structure for '{input_folder}':"]
+tree.extend(build_tree(input_folder))
+
+# Write tree to output file
+with open(output_file, "w", encoding="utf-8") as out:
+    out.write("\n".join(tree))
+    out.write("\n\n")
+
+# Walk the directory tree and export code
+for root, dirs, files in os.walk(input_folder):
+    dirs[:] = [d for d in dirs if d not in exclude_dirs]
+    for file in files:
+        if file in exclude_files:
+            continue
+        ext = os.path.splitext(file)[1]
+        if ext in include_ext:
+            file_path = os.path.join(root, file)
+            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+            with open(output_file, "a", encoding="utf-8") as out:
+                out.write(f"===== {file_path} =====\n")
+                out.write(content)
+                out.write("\n\n")
+
+print(f"Exported code from '{input_folder}' to {output_file}")
+
+
+===== ./src/setupTests.js =====
+// frontend/src/setupTests.js
+import '@testing-library/jest-dom';
+
+
+===== ./src/index.css =====
+@import "tailwindcss";
+
+===== ./src/hooks/useTasks.js =====
+import { useState, useEffect, useCallback } from 'react';
+import taskService from '../services/taskService';
+
+export default function useTasks() {
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [operationLoading, setOperationLoading] = useState({
+    add: false,
+    toggle: {},
+    delete: {}
+  });
+
+  const clearError = useCallback(() => setError(null), []);
+
+  const fetchTasks = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await taskService.getTasks();
+      setTasks(response.data);
+      clearError();
+    } catch (err) {
+      setError('Failed to load tasks. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
+  }, [clearError]);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  const addTask = async (title) => {
+    if (!title.trim()) return;
+
+    try {
+      setOperationLoading(prev => ({ ...prev, add: true }));
+      clearError();
+      const response = await taskService.addTask(title.trim());
+      setTasks(prev => [...prev, response.data]);
+      return true;
+    } catch (err) {
+      setError('Failed to add task. Please try again.');
+      return false;
+    } finally {
+      setOperationLoading(prev => ({ ...prev, add: false }));
+    }
+  };
+
+  const toggleTask = async (id) => {
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
+
+    try {
+      setOperationLoading(prev => ({
+        ...prev,
+        toggle: { ...prev.toggle, [id]: true }
+      }));
+      clearError();
+      const response = await taskService.updateTask(id, {
+        title: task.title,
+        completed: !task.completed
+      });
+      setTasks(prev => prev.map(t => t.id === id ? response.data : t));
+    } catch (err) {
+      setError('Failed to update task. Please try again.');
+    } finally {
+      setOperationLoading(prev => ({
+        ...prev,
+        toggle: { ...prev.toggle, [id]: false }
+      }));
+    }
+  };
+
+  const deleteTask = async (id) => {
+    try {
+      setOperationLoading(prev => ({
+        ...prev,
+        delete: { ...prev.delete, [id]: true }
+      }));
+      clearError();
+      await taskService.deleteTask(id);
+      setTasks(prev => prev.filter(t => t.id !== id));
+    } catch (err) {
+      setError('Failed to delete task. Please try again.');
+    } finally {
+      setOperationLoading(prev => ({
+        ...prev,
+        delete: { ...prev.delete, [id]: false }
+      }));
+    }
+  };
+
+  const completedCount = tasks.filter(t => t.completed).length;
+  const totalCount = tasks.length;
+  const completionRate = totalCount > 0 
+    ? Math.round((completedCount / totalCount) * 100) 
+    : 0;
+
+  return {
+    tasks,
+    loading,
+    error,
+    operationLoading,
+    addTask,
+    toggleTask,
+    deleteTask,
+    clearError,
+    stats: { completedCount, totalCount, completionRate }
+  };
+}
+
+===== ./src/services/taskService.js =====
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+export default {
+  getTasks: () => axios.get(`${API_URL}/tasks`),
+  addTask: (title) => axios.post(`${API_URL}/tasks`, { title }),
+  updateTask: (id, data) => axios.put(`${API_URL}/tasks/${id}`, data),
+  deleteTask: (id) => axios.delete(`${API_URL}/tasks/${id}`)
+};
+
